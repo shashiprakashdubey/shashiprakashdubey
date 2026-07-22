@@ -47,6 +47,12 @@ A full observability & alerting stack — Prometheus (GCE service discovery) + G
 dashboards-as-code) + Alertmanager, alongside GCP Cloud Monitoring — with severity-based routing
 (page vs. chat), on-call enrichment, and a **two-tier public status page**.
 
+### 🔎 [elasticsearch-on-gcp-pulumi](https://github.com/teamiumtree/elasticsearch-on-gcp-pulumi)
+Elasticsearch + Kibana on GCP, two ways: a **hardened single cluster** (golden image + layered
+snapshots, IAP/Cloud Armor edge, stateful-VM lifecycle) and a **multi-tenant per-client fleet**
+(one shared program → N stack instances, onboarding-as-code, per-tenant isolation) — with AST
+invariant tests.
+
 ## How I work
 
 - **`preview` is the gate.** No change lands without a clean, understood plan — an unexpected
@@ -60,7 +66,7 @@ dashboards-as-code) + Alertmanager, alongside GCP Cloud Monitoring — with seve
 
 `Pulumi` · `Python` · `Google Cloud` · `GitHub Actions` · `Workload Identity Federation` ·
 `Cloud Run` · `IAM` · `Binary Authorization` · `Cloud Armor` · `Ansible` · `Prometheus` ·
-`Grafana` · `Alertmanager` · `PagerDuty` · `BigQuery` · `Bash`
+`Grafana` · `Alertmanager` · `PagerDuty` · `Elasticsearch` · `Kibana` · `BigQuery` · `Bash`
 
 ---
 
