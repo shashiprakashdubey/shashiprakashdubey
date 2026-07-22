@@ -36,10 +36,15 @@ Honest problem → constraints → approach → outcome write-ups: a keyless-CI 
 IAM consolidation, click-ops adoption, a zero-downtime Shielded-VM rollout, and cost optimization
 with empirical safety gating.
 
+### 📊 [prometheus-grafana-observability](https://github.com/teamiumtree/prometheus-grafana-observability)
+A full observability & alerting stack: Prometheus (GCE service discovery) + Grafana (SSO,
+dashboards-as-code) + Alertmanager, alongside GCP Cloud Monitoring — with severity-based routing
+(page vs. chat), on-call enrichment, and a two-tier public status page.
+
 ## Toolbox
 
 `Pulumi` · `Python` · `Google Cloud` · `GitHub Actions` · `Workload Identity Federation` ·
-`Cloud Run` · `IAM` · `Binary Authorization` · `Cloud Armor` · `Ansible` · `Prometheus` · `Grafana`
+`Cloud Run` · `IAM` · `Binary Authorization` · `Cloud Armor` · `Ansible` · `Prometheus` · `Grafana` · `Alertmanager` · `PagerDuty`
 
 ---
 
