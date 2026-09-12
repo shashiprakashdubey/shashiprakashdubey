@@ -1,78 +1,61 @@
-# Platform Engineer · DevOps · SRE
+# Shashi Prakash Dubey
 
-**I build and operate Google Cloud infrastructure as code — and make high-blast-radius changes
-boring.** The craft I care about is turning "this could cause an outage" into a routine,
-reviewable, reversible operation: find the version of the change that can't break, prove it
-can't with a `preview` or an empirical check, and encode the invariant so it can never silently
-regress.
+**Platform Engineer · DevOps · SRE** — Google Cloud, Pulumi (Python), and the discipline that
+makes high-blast-radius infrastructure changes boring.
 
-Everything here is **original, generic, and anonymized** — reference patterns and case studies
-distilled from real production ownership, with no proprietary or customer data.
+![Google Cloud](https://img.shields.io/badge/Google%20Cloud-4285F4?style=flat-square&logo=googlecloud&logoColor=white)
+![Pulumi](https://img.shields.io/badge/Pulumi-8A3391?style=flat-square&logo=pulumi&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)
+![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=flat-square&logo=prometheus&logoColor=white)
+![Terraform-free](https://img.shields.io/badge/IaC-Pulumi%2C%20not%20Terraform-555?style=flat-square)
+
+I own a multi-project GCP estate end to end — infrastructure as code, keyless CI, observability,
+on-call, and the security posture around all of it.
+
+Everything below is **original, generic and anonymized**: reference architectures, patterns and
+case studies distilled from real production ownership, with no proprietary or customer data.
 
 ---
 
-## What I do
+## Start here
+
+Three entry points, depending on what you came to find out:
+
+| If you want to see… | Read this | Time |
+|---|---|---|
+| **How I think about failure** — the IaC mistakes that become security incidents, each paired with the test that stops it recurring | [iac-security-patterns](https://github.com/shashiprakashdubey/iac-security-patterns) | ~2 min |
+| **How I structure a platform** — a multi-project GCP estate as many small, independent Pulumi stacks | [gcp-pulumi-reference-architecture](https://github.com/shashiprakashdubey/gcp-pulumi-reference-architecture) | ~3 min |
+| **How it actually went** — problem → constraints → approach → how I knew it worked | [platform-engineering-case-studies](https://github.com/shashiprakashdubey/platform-engineering-case-studies) | ~2 min |
+
+## All repositories
+
+| Repo | What it is | The idea worth stealing |
+|---|---|---|
+| 🏛️ **[gcp-pulumi-reference-architecture](https://github.com/shashiprakashdubey/gcp-pulumi-reference-architecture)** | A multi-project GCP estate as many small, independent Pulumi stacks | Stacks talk *only* through `StackReference` outputs, so deploy order falls out of the dependency graph |
+| 🔐 **[iac-security-patterns](https://github.com/shashiprakashdubey/iac-security-patterns)** | The four IaC patterns where a subtle mistake is a security incident, not a broken build | An **AST regression test** that fails CI if a second authoritative IAM binding for a role ever appears |
+| 📦 **[dependabot-at-scale](https://github.com/shashiprakashdubey/dependabot-at-scale)** | Dependency automation once it stops being a checkbox | `ignore` + `update-types` never constrains **security** updates — so every semver hold is advisory until CI enforces it |
+| 📓 **[platform-engineering-case-studies](https://github.com/shashiprakashdubey/platform-engineering-case-studies)** | Seven honest write-ups of migrations I led | Finding the version of a change that *can't* cause an outage, then proving it |
+| 📊 **[prometheus-grafana-observability](https://github.com/shashiprakashdubey/prometheus-grafana-observability)** | Prometheus + Grafana + Alertmanager alongside GCP Cloud Monitoring | Severity decides the channel: what pages a human at 3am vs. what just posts to chat |
+| 🔎 **[elasticsearch-on-gcp-pulumi](https://github.com/shashiprakashdubey/elasticsearch-on-gcp-pulumi)** | Elasticsearch + Kibana on GCP, two ways: one hardened cluster, or a per-tenant fleet | Managing a *stateful* VM with Pulumi without ever letting it be **replaced** |
+
+## What I work on
 
 | Area | In practice |
 |---|---|
-| **Infrastructure as Code** | Pulumi (Python), many small independent stacks, `StackReference` contracts, safe state surgery (`import`, `refresh`, `state delete`) |
-| **Cloud security** | Least-privilege IAM, Workload Identity Federation (keyless CI), Binary Authorization, Shielded VMs, org policy, Cloud Armor WAF |
-| **Reliability & DR** | Recreate-vs-restore disaster recovery, stateful snapshot recovery, deletion protection, multi-region uptime |
-| **Observability** | Prometheus + Grafana + Alertmanager and GCP Cloud Monitoring; severity routing, on-call enrichment, SLO-style alerting |
-| **Supply chain** | Dependabot across several ecosystems and dozens of manifest directories; grouping policy, coverage guards, enforcing version holds the security channel ignores |
-| **Operational safety** | `preview`-gated deploys, adopting click-ops drift without outages, invariant-enforcing tests |
+| **Infrastructure as Code** | Pulumi (Python), many small stacks, `StackReference` contracts, safe state surgery (`import`, `refresh`, `state delete`) |
+| **Cloud security** | Least-privilege IAM, Workload Identity Federation (keyless CI), Binary Authorization, Shielded VMs, org policy, Cloud Armor |
+| **Reliability & DR** | Recreate-vs-restore recovery, stateful snapshot recovery, deletion protection, multi-region uptime |
+| **Observability** | Prometheus, Grafana, Alertmanager, Cloud Monitoring; severity routing, on-call enrichment |
+| **Supply chain** | Dependabot across several ecosystems and dozens of manifest directories, with CI guards that enforce what the config alone can't |
 | **FinOps** | Cost reduction gated on empirical safety checks, not guesswork |
-
-## Featured work
-
-### 🏛️ [gcp-pulumi-reference-architecture](https://github.com/shashiprakashdubey/gcp-pulumi-reference-architecture)
-A multi-project GCP estate as many small, independent Pulumi stacks — dependency graph,
-`StackReference` contracts, deploy ordering, **standing up a whole new environment (UAT) from
-config with zero new code**, and a **recreate-vs-restore disaster-recovery** model.
-
-### 🔐 [iac-security-patterns](https://github.com/shashiprakashdubey/iac-security-patterns)
-The patterns where a subtle IaC mistake becomes a security incident — each paired with the
-failure mode it prevents and the test that stops it recurring:
-- **Authoritative IAM** — one binding per role, enforced by an **AST regression test** that fails CI on a duplicate
-- **Keyless CI (WIF/OIDC)** — no service-account keys; trust pinned to *immutable* repo claims
-- **Adopting click-ops into IaC** — `import` + `protect` + `retain_on_delete`, minimal blast radius
-- **Binary Authorization** — dry-run → enforce, with a risk-acceptance memo
-
-### 📦 [dependabot-at-scale](https://github.com/shashiprakashdubey/dependabot-at-scale)
-Dependency automation once it stops being a checkbox — the failures that are **silent** rather
-than loud, and the CI guards that make them visible:
-- **Grouping that stays reviewable** — batch patch+minor, isolate majors, and group the lockstep
-  families that are only mergeable together
-- **Directory coverage as globs** — a hand-maintained list drifts on the one branch Dependabot
-  reads, and an uncovered directory gets no updates *and no CVE alerts*, silently
-- **A manifest guard** — `ignore` + `update-types` never constrains **security** updates, so every
-  semver hold is advisory until CI enforces it; also catches downgrades and undocumented edits
-- **Per-directory security scoping** — bound the blast radius of a cross-directory security PR
-
-Both guards ship with committed, mutation-tested suites and run in CI across three Python versions.
-
-### 📓 [platform-engineering-case-studies](https://github.com/shashiprakashdubey/platform-engineering-case-studies)
-Honest problem → constraints → approach → outcome write-ups: keyless-CI migration, race-free
-IAM consolidation, click-ops adoption, zero-downtime Shielded-VM rollout, standing up a new UAT
-environment, disaster recovery, and cost optimization with empirical safety gating.
-
-### 📊 [prometheus-grafana-observability](https://github.com/shashiprakashdubey/prometheus-grafana-observability)
-A full observability & alerting stack — Prometheus (GCE service discovery) + Grafana (SSO,
-dashboards-as-code) + Alertmanager, alongside GCP Cloud Monitoring — with severity-based routing
-(page vs. chat), on-call enrichment, and a **two-tier public status page**.
-
-### 🔎 [elasticsearch-on-gcp-pulumi](https://github.com/shashiprakashdubey/elasticsearch-on-gcp-pulumi)
-Elasticsearch + Kibana on GCP, two ways: a **hardened single cluster** (golden image + layered
-snapshots, IAP/Cloud Armor edge, stateful-VM lifecycle) and a **multi-tenant per-client fleet**
-(one shared program → N stack instances, onboarding-as-code, per-tenant isolation) — with AST
-invariant tests.
 
 ## How I work
 
 - **`preview` is the gate.** No change lands without a clean, understood plan — an unexpected
   *replace* is a stop-and-investigate signal, not a rubber-stamp.
 - **Encode safety in the pipeline, not a runbook.** If a rule matters, a test enforces it; a
-  comment that says "don't do this" will eventually be ignored.
+  comment saying "don't do this" will eventually be ignored.
 - **Smallest blast radius that solves the problem.** Govern a resource without owning every
   field of it; touch only what the change requires.
 
@@ -80,8 +63,8 @@ invariant tests.
 
 `Pulumi` · `Python` · `Google Cloud` · `GitHub Actions` · `Workload Identity Federation` ·
 `Cloud Run` · `IAM` · `Binary Authorization` · `Cloud Armor` · `Ansible` · `Prometheus` ·
-`Grafana` · `Alertmanager` · `PagerDuty` · `Elasticsearch` · `Kibana` · `BigQuery` · `Dependabot` ·
-`Bash`
+`Grafana` · `Alertmanager` · `PagerDuty` · `Elasticsearch` · `Kibana` · `BigQuery` ·
+`Dependabot` · `Bash`
 
 ---
 
