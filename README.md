@@ -26,6 +26,7 @@ Three entry points, depending on what you came to find out:
 |---|---|---|
 | **How I think about failure** — the IaC mistakes that become security incidents, each paired with the test that stops it recurring | [iac-security-patterns](https://github.com/shashiprakashdubey/iac-security-patterns) | ~2 min |
 | **How I structure a platform** — a multi-project GCP estate as many small, independent Pulumi stacks | [gcp-pulumi-reference-architecture](https://github.com/shashiprakashdubey/gcp-pulumi-reference-architecture) | ~3 min |
+| **How I keep a guard honest** — the checks that pass without looking, and how to prove one ran | [fake-green](https://github.com/shashiprakashdubey/fake-green) | ~4 min |
 | **How it actually went** — problem → constraints → approach → how I knew it worked | [platform-engineering-case-studies](https://github.com/shashiprakashdubey/platform-engineering-case-studies) | ~2 min |
 
 ## All repositories
@@ -35,6 +36,8 @@ Three entry points, depending on what you came to find out:
 | 🏛️ **[gcp-pulumi-reference-architecture](https://github.com/shashiprakashdubey/gcp-pulumi-reference-architecture)** | A multi-project GCP estate as many small, independent Pulumi stacks | Stacks talk *only* through `StackReference` outputs, so deploy order falls out of the dependency graph |
 | 🔐 **[iac-security-patterns](https://github.com/shashiprakashdubey/iac-security-patterns)** | The four IaC patterns where a subtle mistake is a security incident, not a broken build | An **AST regression test** that fails CI if a second authoritative IAM binding for a role ever appears |
 | 📦 **[dependabot-at-scale](https://github.com/shashiprakashdubey/dependabot-at-scale)** | Dependency automation once it stops being a checkbox | `ignore` + `update-types` never constrains **security** updates — so every semver hold is advisory until CI enforces it |
+| 🟢 **[fake-green](https://github.com/shashiprakashdubey/fake-green)** | A field guide to CI checks that pass without ever looking | "Nothing is wrong" and "nothing was checked" produce identical output — every mechanism here tells them apart |
+| 🔔 **[alerting-integrity](https://github.com/shashiprakashdubey/alerting-integrity)** | Verifying the alerting you built can actually reach a human | An alert whose filter matches nothing never fires, and silence is exactly what healthy looks like |
 | 📓 **[platform-engineering-case-studies](https://github.com/shashiprakashdubey/platform-engineering-case-studies)** | Seven honest write-ups of migrations I led | Finding the version of a change that *can't* cause an outage, then proving it |
 | 📊 **[prometheus-grafana-observability](https://github.com/shashiprakashdubey/prometheus-grafana-observability)** | Prometheus + Grafana + Alertmanager alongside GCP Cloud Monitoring | Severity decides the channel: what pages a human at 3am vs. what just posts to chat |
 | 🔎 **[elasticsearch-on-gcp-pulumi](https://github.com/shashiprakashdubey/elasticsearch-on-gcp-pulumi)** | Elasticsearch + Kibana on GCP, two ways: one hardened cluster, or a per-tenant fleet | Managing a *stateful* VM with Pulumi without ever letting it be **replaced** |
