@@ -14,7 +14,7 @@ I own a multi-project GCP estate end to end — infrastructure as code, keyless 
 on-call, and the security posture around all of it.
 
 Everything below is **original, generic and anonymized**: reference architectures, patterns and
-case studies distilled from real production ownership, with no proprietary or customer data.
+case studies distilled from real production ownership.
 
 ---
 
