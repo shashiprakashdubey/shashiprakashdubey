@@ -72,4 +72,4 @@ Three entry points, depending on what you came to find out:
 ---
 
 <sub>All repositories contain original, generic, anonymized reference material — patterns and
-case studies, never proprietary or customer data.</sub>
+case studies.</sub>
