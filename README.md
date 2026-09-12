@@ -19,6 +19,7 @@ distilled from real production ownership, with no proprietary or customer data.
 | **Cloud security** | Least-privilege IAM, Workload Identity Federation (keyless CI), Binary Authorization, Shielded VMs, org policy, Cloud Armor WAF |
 | **Reliability & DR** | Recreate-vs-restore disaster recovery, stateful snapshot recovery, deletion protection, multi-region uptime |
 | **Observability** | Prometheus + Grafana + Alertmanager and GCP Cloud Monitoring; severity routing, on-call enrichment, SLO-style alerting |
+| **Supply chain** | Dependabot across several ecosystems and dozens of manifest directories; grouping policy, coverage guards, enforcing version holds the security channel ignores |
 | **Operational safety** | `preview`-gated deploys, adopting click-ops drift without outages, invariant-enforcing tests |
 | **FinOps** | Cost reduction gated on empirical safety checks, not guesswork |
 
@@ -36,6 +37,19 @@ failure mode it prevents and the test that stops it recurring:
 - **Keyless CI (WIF/OIDC)** — no service-account keys; trust pinned to *immutable* repo claims
 - **Adopting click-ops into IaC** — `import` + `protect` + `retain_on_delete`, minimal blast radius
 - **Binary Authorization** — dry-run → enforce, with a risk-acceptance memo
+
+### 📦 [dependabot-at-scale](https://github.com/shashiprakashdubey/dependabot-at-scale)
+Dependency automation once it stops being a checkbox — the failures that are **silent** rather
+than loud, and the CI guards that make them visible:
+- **Grouping that stays reviewable** — batch patch+minor, isolate majors, and group the lockstep
+  families that are only mergeable together
+- **Directory coverage as globs** — a hand-maintained list drifts on the one branch Dependabot
+  reads, and an uncovered directory gets no updates *and no CVE alerts*, silently
+- **A manifest guard** — `ignore` + `update-types` never constrains **security** updates, so every
+  semver hold is advisory until CI enforces it; also catches downgrades and undocumented edits
+- **Per-directory security scoping** — bound the blast radius of a cross-directory security PR
+
+Both guards ship with committed, mutation-tested suites and run in CI across three Python versions.
 
 ### 📓 [platform-engineering-case-studies](https://github.com/shashiprakashdubey/platform-engineering-case-studies)
 Honest problem → constraints → approach → outcome write-ups: keyless-CI migration, race-free
@@ -66,7 +80,8 @@ invariant tests.
 
 `Pulumi` · `Python` · `Google Cloud` · `GitHub Actions` · `Workload Identity Federation` ·
 `Cloud Run` · `IAM` · `Binary Authorization` · `Cloud Armor` · `Ansible` · `Prometheus` ·
-`Grafana` · `Alertmanager` · `PagerDuty` · `Elasticsearch` · `Kibana` · `BigQuery` · `Bash`
+`Grafana` · `Alertmanager` · `PagerDuty` · `Elasticsearch` · `Kibana` · `BigQuery` · `Dependabot` ·
+`Bash`
 
 ---
 
