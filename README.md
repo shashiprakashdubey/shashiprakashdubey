@@ -24,12 +24,12 @@ distilled from real production ownership, with no proprietary or customer data.
 
 ## Featured work
 
-### 🏛️ [gcp-pulumi-reference-architecture](https://github.com/teamiumtree/gcp-pulumi-reference-architecture)
+### 🏛️ [gcp-pulumi-reference-architecture](https://github.com/shashiprakashdubey/gcp-pulumi-reference-architecture)
 A multi-project GCP estate as many small, independent Pulumi stacks — dependency graph,
 `StackReference` contracts, deploy ordering, **standing up a whole new environment (UAT) from
 config with zero new code**, and a **recreate-vs-restore disaster-recovery** model.
 
-### 🔐 [iac-security-patterns](https://github.com/teamiumtree/iac-security-patterns)
+### 🔐 [iac-security-patterns](https://github.com/shashiprakashdubey/iac-security-patterns)
 The patterns where a subtle IaC mistake becomes a security incident — each paired with the
 failure mode it prevents and the test that stops it recurring:
 - **Authoritative IAM** — one binding per role, enforced by an **AST regression test** that fails CI on a duplicate
@@ -37,17 +37,17 @@ failure mode it prevents and the test that stops it recurring:
 - **Adopting click-ops into IaC** — `import` + `protect` + `retain_on_delete`, minimal blast radius
 - **Binary Authorization** — dry-run → enforce, with a risk-acceptance memo
 
-### 📓 [platform-engineering-case-studies](https://github.com/teamiumtree/platform-engineering-case-studies)
+### 📓 [platform-engineering-case-studies](https://github.com/shashiprakashdubey/platform-engineering-case-studies)
 Honest problem → constraints → approach → outcome write-ups: keyless-CI migration, race-free
 IAM consolidation, click-ops adoption, zero-downtime Shielded-VM rollout, standing up a new UAT
 environment, disaster recovery, and cost optimization with empirical safety gating.
 
-### 📊 [prometheus-grafana-observability](https://github.com/teamiumtree/prometheus-grafana-observability)
+### 📊 [prometheus-grafana-observability](https://github.com/shashiprakashdubey/prometheus-grafana-observability)
 A full observability & alerting stack — Prometheus (GCE service discovery) + Grafana (SSO,
 dashboards-as-code) + Alertmanager, alongside GCP Cloud Monitoring — with severity-based routing
 (page vs. chat), on-call enrichment, and a **two-tier public status page**.
 
-### 🔎 [elasticsearch-on-gcp-pulumi](https://github.com/teamiumtree/elasticsearch-on-gcp-pulumi)
+### 🔎 [elasticsearch-on-gcp-pulumi](https://github.com/shashiprakashdubey/elasticsearch-on-gcp-pulumi)
 Elasticsearch + Kibana on GCP, two ways: a **hardened single cluster** (golden image + layered
 snapshots, IAP/Cloud Armor edge, stateful-VM lifecycle) and a **multi-tenant per-client fleet**
 (one shared program → N stack instances, onboarding-as-code, per-tenant isolation) — with AST
